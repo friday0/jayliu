@@ -15,24 +15,24 @@ using namespace std;
 
 void main()
 {
-	int working_hour = 0;
-	double salary = 0, tax = 0;
+	int iWorkingHour = 0;
+	double dSalary = 0, dTax = 0;
 	cout<<"Input your working hour per week:";
-	cin>>working_hour;
+	cin>>iWorkingHour;
 	
-	if(working_hour <= BASIC_WORKING_HOUR)
-		salary = working_hour * BASIC_SALARY;
+	if(iWorkingHour <= BASIC_WORKING_HOUR)
+		dSalary = iWorkingHour * BASIC_SALARY;
 	else
-		salary = BASIC_WORKING_HOUR * BASIC_SALARY + (working_hour - BASIC_WORKING_HOUR) * EXTRA_SALARY;
+		dSalary = BASIC_WORKING_HOUR * BASIC_SALARY + (iWorkingHour - BASIC_WORKING_HOUR) * EXTRA_SALARY;
 
-	if(salary <= SALARY_LEVEL_1)
-		tax = salary * TAX_LEVEL_1;
-	else if (salary > SALARY_LEVEL_1 && salary <= SALARY_LEVEL_2)
-		tax = salary * TAX_LEVEL_2;
+	if(dSalary <= SALARY_LEVEL_1)
+		dTax = dSalary * TAX_LEVEL_1;
+	else if (dSalary > SALARY_LEVEL_1 && dSalary <= SALARY_LEVEL_2)
+		dTax = dSalary * TAX_LEVEL_2;
 	else
-		tax = salary * TAX_LEVEL_3;
+		dTax = dSalary * TAX_LEVEL_3;
 
-	cout<<"Salary per week:"<<salary<<endl;
-	cout<<"Tax:"<<tax<<endl;
-	cout<<"Salary after tax:"<<salary - tax<<endl;
+	cout<<"dSalary per week:"<<dSalary<<endl;
+	cout<<"dTax:"<<dTax<<endl;
+	cout<<"dSalary after dTax:"<<dSalary - dTax<<endl;
 }

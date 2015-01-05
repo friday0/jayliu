@@ -5,75 +5,75 @@ using namespace std;
 #define BUFF_SIZE 512
 #define ARGS_SIZE 128
 
-void parse_protocol(char dest[], char src[])
+void ParseProtocol(char acDest[], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
-	char buff[BUFF_SIZE] = "\0";
-	char *ptr = strstr(src, "http://");
-	if(ptr)
+	char acBuff[BUFF_SIZE] = "\0";
+	char *paPtr = strstr(acSrc, "http://");
+	if(paPtr)
 	{
-		ptr += strlen("http://");
+		paPtr += strlen("http://");
 	}
 	else
 	{
-		ptr = strstr(src, "https://");
-		if(ptr)
+		paPtr = strstr(acSrc, "https://");
+		if(paPtr)
 		{
-			memcpy(dest, "HTTPS", strlen("HTTPS"));
-			ptr += strlen("https://");
+			memcpy(acDest, "HTTPS", strlen("HTTPS"));
+			paPtr += strlen("https://");
 		}
 		else
 		{
-			ptr = src;
+			paPtr = acSrc;
 		}
 	}
 
-	memcpy(buff, ptr, strlen(ptr));
-	memset(src, 0x0, BUFF_SIZE);
-	memcpy(src, buff, strlen(buff));
+	memcpy(acBuff, paPtr, strlen(paPtr));
+	memset(acSrc, 0x0, BUFF_SIZE);
+	memcpy(acSrc, acBuff, strlen(acBuff));
 }
 
-void parse_domain(char dest[], char src[])
+void parse_domain(char acDest[], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
-	char buff[BUFF_SIZE] = "\0";
-	char *ptr = strstr(src, "/");
-	if(ptr)
+	char acBuff[BUFF_SIZE] = "\0";
+	char *paPtr = strstr(acSrc, "/");
+	if(paPtr)
 	{
-		memcpy(dest, src, ptr - src); 
+		memcpy(acDest, acSrc, paPtr - acSrc); 
 
-		memcpy(buff, ptr, strlen(ptr)); 
-		memset(src, 0x0, BUFF_SIZE);
-		memcpy(src, buff, strlen(buff));
+		memcpy(acBuff, paPtr, strlen(paPtr)); 
+		memset(acSrc, 0x0, BUFF_SIZE);
+		memcpy(acSrc, acBuff, strlen(acBuff));
 	}
 	else
 	{
-		memcpy(dest, src, strlen(src));
-		memset(src, 0x0, BUFF_SIZE);
+		memcpy(acDest, acSrc, strlen(acSrc));
+		memset(acSrc, 0x0, BUFF_SIZE);
 	}
 }
 
-void parse_port(char dest[], char src[])
+void parse_port(char acDest[], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
-	char buff[BUFF_SIZE] = "\0";
-	if(strstr(src, ":") != NULL)
+	char acBuff[BUFF_SIZE] = "\0";
+	if(strstr(acSrc, ":") != NULL)
 	{
-		char *ptr = strstr(src, ":");
-		if(ptr)
+		char *paPtr = strstr(acSrc, ":");
+		if(paPtr)
 		{
-			//檢查port是否全為數字
+			//檢查acPort是否全為數字
 			bool flag = true;
-			ptr++;
+			paPtr++;
 			char tmp[5] = "\0";
-			int len = strlen(ptr) < 5 ? strlen(ptr) : 5;
-			memcpy(tmp, ptr, len);
+			int len = strlen(paPtr) < 5 ? strlen(paPtr) : 5;
+			memcpy(tmp, paPtr, len);
 			for(int j = 0; j < len; ++j)
 			{
 				if(!isdigit(tmp[j]))
@@ -84,37 +84,37 @@ void parse_port(char dest[], char src[])
 			}
 			if(flag)
 			{
-				memcpy(dest, ptr, strlen(ptr));
-				*--ptr = '\0';
+				memcpy(acDest, paPtr, strlen(paPtr));
+				*--paPtr = '\0';
 			}
 		}
 	}
 }
 
-void parse_ip(char dest[], char src[])
+void parse_ip(char acDest[], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
-	char buff[BUFF_SIZE] = "\0";
+	char acBuff[BUFF_SIZE] = "\0";
 	char *token[4] = {"\0", "\0", "\0", "\0"};
-	memcpy(buff, src, strlen(src));
+	memcpy(acBuff, acSrc, strlen(acSrc));
 
 	//依據"."把各個字串分割後填入到token中
 	char *tmp;
-	char *ptr = strtok_s(buff, ".", &tmp);
+	char *paPtr = strtok_s(acBuff, ".", &tmp);
 	int c = 0;
-	if(ptr)
+	if(paPtr)
 	{
 		for(; c < 4; ++c) 
 		{
-			token[c] = ptr;
-			ptr = strtok_s(NULL, ".", &tmp);
-			if(!ptr)
+			token[c] = paPtr;
+			paPtr = strtok_s(NULL, ".", &tmp);
+			if(!paPtr)
 				break;
 		}
 	}
-	if(c == 3)	//IP必為四組數字(也就是說上面的迴圈必須執行完不能中斷)
+	if(c == 3)	//acIp必為四組數字(也就是說上面的迴圈必須執行完不能中斷)
 	{
 		bool flag = true;
 		for(int i = 0; i < 4; ++i)
@@ -133,75 +133,75 @@ void parse_ip(char dest[], char src[])
 		}
 		
 		if(flag)
-			sprintf_s(dest, BUFF_SIZE, "%s.%s.%s.%s", token[0], token[1], token[2], token[3]);
+			sprintf_s(acDest, BUFF_SIZE, "%s.%s.%s.%s", token[0], token[1], token[2], token[3]);
 	}
 }
 
-void parse_path(char dest[], char src[])
+void parse_path(char acDest[], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
-	char buff[BUFF_SIZE] = "\0";
-	char *ptr = strstr(src, "/");
+	char acBuff[BUFF_SIZE] = "\0";
+	char *paPtr = strstr(acSrc, "/");
 
-	//讓ptr指到最後一個"/"
-	while(ptr != NULL)
+	//讓paPtr指到最後一個"/"
+	while(paPtr != NULL)
 	{
-		if(strstr(ptr+1, "/") != NULL)
-			ptr = strstr(ptr+1, "/");
+		if(strstr(paPtr+1, "/") != NULL)
+			paPtr = strstr(paPtr+1, "/");
 		else
 			break;
 	}
 
-	if(ptr != NULL)
+	if(paPtr != NULL)
 	{
-		memcpy(dest, src, ptr - src);
-		memcpy(buff, ptr+1, strlen(ptr+1));
-		memset(src, 0x0, BUFF_SIZE);
-		memcpy(src, buff, strlen(buff));
+		memcpy(acDest, acSrc, paPtr - acSrc);
+		memcpy(acBuff, paPtr+1, strlen(paPtr+1));
+		memset(acSrc, 0x0, BUFF_SIZE);
+		memcpy(acSrc, acBuff, strlen(acBuff));
 	}
 	else
 	{
-		memcpy(buff, src, strlen(src));
+		memcpy(acBuff, acSrc, strlen(acSrc));
 	}
 }
 
-void parse_file(char dest[], char src[])
+void parse_file(char acDest[], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
-	char buff[BUFF_SIZE] = "\0";
-	char *ptr = strstr(src, "?");
-	if(ptr != NULL)
+	char acBuff[BUFF_SIZE] = "\0";
+	char *paPtr = strstr(acSrc, "?");
+	if(paPtr != NULL)
 	{
-		memcpy(dest, src, ptr - src);
+		memcpy(acDest, acSrc, paPtr - acSrc);
 
-		memcpy(buff, ptr+1, strlen(ptr+1));
-		memset(src, 0x0, BUFF_SIZE);
-		memcpy(src, buff, strlen(buff));
+		memcpy(acBuff, paPtr+1, strlen(paPtr+1));
+		memset(acSrc, 0x0, BUFF_SIZE);
+		memcpy(acSrc, acBuff, strlen(acBuff));
 	}
 }
 
-void parse_args(char dest[BUFF_SIZE][BUFF_SIZE], char src[])
+void parse_args(char acDest[BUFF_SIZE][BUFF_SIZE], char acSrc[])
 {
-	if(!dest || !src)
+	if(!acDest || !acSrc)
 		return;
 
 	char *tmp;
-	char *ptr = strtok_s(src, "&", &tmp);
-	if(!ptr)
+	char *paPtr = strtok_s(acSrc, "&", &tmp);
+	if(!paPtr)
 	{
-		memcpy(dest[0], src, strlen(src));
+		memcpy(acDest[0], acSrc, strlen(acSrc));
 	}
 	else
 	{
 		for(int i = 0; i < ARGS_SIZE; ++i)
 		{
-			memcpy(dest[i], ptr, strlen(ptr));
-			ptr = strtok_s(NULL, "&", &tmp);
-			if(!ptr)
+			memcpy(acDest[i], paPtr, strlen(paPtr));
+			paPtr = strtok_s(NULL, "&", &tmp);
+			if(!paPtr)
 				break;
 		}
 	}
@@ -209,43 +209,42 @@ void parse_args(char dest[BUFF_SIZE][BUFF_SIZE], char src[])
 
 void main()
 {
-	int pos = 0;
-	char url[BUFF_SIZE] = "\0";
-	cout<<"Input a url:";
-	cin>>url;
-	_strlwr_s(url);//轉成全小寫
+	char acUrl[BUFF_SIZE] = "\0";
+	cout<<"Input a acUrl:";
+	cin>>acUrl;
+	_strlwr_s(acUrl);//轉成全小寫
 
 
-	char protocol[BUFF_SIZE] = "HTTP";
-	char domain[BUFF_SIZE] = "\0";
-	char port[BUFF_SIZE] = "\0";
-	char ip[BUFF_SIZE] = "\0";
-	char path[BUFF_SIZE] = "\0";
-	char file[BUFF_SIZE] = "\0";
-	char args[ARGS_SIZE][BUFF_SIZE];
-	memset(args, 0x0, ARGS_SIZE*BUFF_SIZE );
+	char acProtocol[BUFF_SIZE] = "HTTP";
+	char acDomain[BUFF_SIZE] = "\0";
+	char acPort[BUFF_SIZE] = "\0";
+	char acIp[BUFF_SIZE] = "\0";
+	char acPath[BUFF_SIZE] = "\0";
+	char acFile[BUFF_SIZE] = "\0";
+	char acArgs[ARGS_SIZE][BUFF_SIZE];
+	memset(acArgs, 0x0, ARGS_SIZE*BUFF_SIZE );
 
-	parse_protocol(protocol, url);
-	parse_domain(domain, url);
-	parse_port(port, domain);
-	parse_ip(ip, domain);
-	parse_path(path, url);
-	parse_file(file, url);
-	parse_args(args, url);
+	ParseProtocol(acProtocol, acUrl);
+	parse_domain(acDomain, acUrl);
+	parse_port(acPort, acDomain);
+	parse_ip(acIp, acDomain);
+	parse_path(acPath, acUrl);
+	parse_file(acFile, acUrl);
+	parse_args(acArgs, acUrl);
 
-	cout<<"protocol:"<<protocol<<endl;
-	if(strlen(ip) != 0)
-		cout<<"IP:"<<ip<<endl;
+	cout<<"acProtocol:"<<acProtocol<<endl;
+	if(strlen(acIp) != 0)
+		cout<<"acIp:"<<acIp<<endl;
 	else
-		cout<<"Domain Name:"<<domain<<endl;
-	if(strlen(port) != 0)
-		cout<<"Port:"<<port<<endl;
-	cout<<"Path:"<<path<<"/"<<file<<endl;
+		cout<<"acDomain Name:"<<acDomain<<endl;
+	if(strlen(acPort) != 0)
+		cout<<"acPort:"<<acPort<<endl;
+	cout<<"acPath:"<<acPath<<"/"<<acFile<<endl;
 	for(int i = 0; i < ARGS_SIZE; ++i)
 	{
-		if(strlen(args[i]) == 0)
+		if(strlen(acArgs[i]) == 0)
 			break;
-		cout<<"Arguments:"<<args[i]<<endl;
+		cout<<"Arguments:"<<acArgs[i]<<endl;
 	}
 
 

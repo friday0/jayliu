@@ -2,36 +2,36 @@
 using namespace std;
 
 
-void is_prime(int &number)
+void IsPrime(int iNumber)
 {
 	cout<<"Prime:";
 
-	for(int i = 2; i < number; ++i)
+	for(int i = 2; i < iNumber; ++i)
 	{
-		bool is_prime = true;
+		bool IsPrime = true;
 		for(int j = 2; j * j < i; ++j)
 		{
 			if(i % j == 0)
 			{
-				is_prime = false;
+				IsPrime = false;
 				break;
 			}
 		}
-		if(is_prime)
+		if(IsPrime)
 			cout<<i<<",";
 	}
 }
 
 void main()
 {
-	int number = 0;
-	while(number <= 0)
+	int iNumber = 0;
+	while(iNumber <= 0)
 	{
-		cout<<"Input positive number:";
-		cin>>number;
-		if(number <= 0)
-			cout<<"Wrong Number!"<<endl;
+		cout<<"Input positive iNumber:";
+		cin>>iNumber;
+		if(iNumber <= 0)
+			cout<<"Wrong iNumber!"<<endl;
 	}
 
-	is_prime(number);
+	IsPrime(iNumber);
 }

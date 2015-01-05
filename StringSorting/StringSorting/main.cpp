@@ -1,28 +1,28 @@
 #include <iostream>
 using namespace std;
 
-#define NUMBER 4
+#define NUMBER 10
 #define LENGTH 32
 
-int compare(const void *a, const void *b)
+int Compare(const void *pvA, const void *pvB)
 {
-	return strcmp((char *)a, (char *)b);
+	return strcmp((char *)pvA, (char *)pvB);
 }
 
 void main()
 {
-	char name[NUMBER][LENGTH];
-	memset(name, 0x0, NUMBER * LENGTH);
+	char acName[NUMBER][LENGTH];
+	memset(acName, 0x0, NUMBER * LENGTH);
 
 	cout<<"Input 10 names:";
 	for(int i = 0; i < NUMBER; ++i)
-		cin>>name[i];
+		cin>>acName[i];
 
-	qsort(name[0], NUMBER, LENGTH, compare);
+	qsort(acName[0], NUMBER, LENGTH, Compare);
 
-	cout<<"Sorted name:"<<endl;
+	cout<<"Sorted acName:"<<endl;
 	for(int i = 0; i < NUMBER; ++i)
-		cout<<name[i]<<endl;
+		cout<<acName[i]<<endl;
 	 
 	
 	system("PAUSE");

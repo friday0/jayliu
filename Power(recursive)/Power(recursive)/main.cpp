@@ -1,20 +1,20 @@
 #include<iostream>
 using namespace std;
 
-double power(double base, double exponent)
+double Power(double dBase, double dExponent)
 {
-	if(exponent == 1)
-		return base * exponent;
+	if(dExponent == 1)
+		return dBase * dExponent;
 
-	return power(base, exponent - 1) * base;
+	return Power(dBase, dExponent - 1) * dBase;
 }
 
 void main()
 {
-	double base = 0, exponent = 0;
-	cout<<"Input base:";
-	cin>>base;
-	cout<<"Input exponent:";
-	cin>>exponent;
-	cout<<(int)power(base, exponent)<<endl;
+	double dBase = 0, dExponent = 0;
+	cout<<"Input dBase:";
+	cin>>dBase;
+	cout<<"Input dExponent:";
+	cin>>dExponent;
+	cout<<(int)Power(dBase, dExponent)<<endl;
 }

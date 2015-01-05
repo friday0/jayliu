@@ -1,22 +1,22 @@
 #include<iostream>
 using namespace std;
 
-int power(double &base, double &exponent)
+int Power(double *pdBase, double *pdExponent)
 {
-	double value = 1;
-	for(int i = 1; i <= exponent; ++i)
+	double dValue = 1;
+	for(int i = 1; i <= *pdExponent; ++i)
 	{
-		value *= base;
+		dValue *= *pdBase;
 	}
-	return (int) value;
+	return (int) dValue;
 }
 
 void main()
 {
-	double base = 0, exponent = 0;
-	cout<<"Input base:";
-	cin>>base;
-	cout<<"Input exponent:";
-	cin>>exponent;
-	cout<<power(base, exponent)<<endl;
+	double dBase = 0, dExponent = 0;
+	cout<<"Input dBase:";
+	cin>>dBase;
+	cout<<"Input dExponent:";
+	cin>>dExponent;
+	cout<<Power(&dBase, &dExponent)<<endl;
 }

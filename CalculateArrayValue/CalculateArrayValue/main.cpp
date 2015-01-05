@@ -6,55 +6,55 @@ using namespace std;
 
 #define max(a,b) (a > b ? a : b)
 
-void input(double buff[ROW][COLUMN])
+void Input(double adBuff[ROW][COLUMN])
 {
 	for(int i = 0; i < ROW; ++i)
 	{
 		cout<<"Set "<<i<<":Input 5 double(Split them by space):";
 		for(int j = 0; j < COLUMN; j++)
-			cin>>buff[i][j];
+			cin>>adBuff[i][j];
 	}
 }
 
-void calculate_set_average(double buff[ROW][COLUMN])
+void CalculateSetAverage(double adBuff[ROW][COLUMN])
 {
 	for(int i = 0; i < ROW; ++i)
 	{
-		double sum = 0;
+		double dSum = 0;
 		for(int j = 0; j < COLUMN; j++)
-			sum += buff[i][j];
-		cout<<"Average of set "<<i<<" is:"<<sum / COLUMN<<endl;
+			dSum += adBuff[i][j];
+		cout<<"Average of set "<<i<<" is:"<<dSum / COLUMN<<endl;
 	}
 }
 
-void calculate_total_average(double buff[ROW][COLUMN])
+void CalculateTotalAverage(double adBuff[ROW][COLUMN])
 {
-	double sum = 0;
+	double dSum = 0;
 	for(int i = 0; i < ROW; ++i)
 	{
 		for(int j = 0; j < COLUMN; j++)
-			sum += buff[i][j];
+			dSum += adBuff[i][j];
 	}
 
-	cout<<"Total average is:"<<sum / (ROW * COLUMN)<<endl;
+	cout<<"Total average is:"<<dSum / (ROW * COLUMN)<<endl;
 }
 
-void find_max(double buff[ROW][COLUMN])
+void FindMax(double dBuff[ROW][COLUMN])
 {
-	double max = 0;
+	double dMax = 0;
 	for(int i = 0; i < ROW; ++i)
 	{
 		for(int j = 0; j < COLUMN; j++)
-			max = max(max, buff[i][j]);
+			dMax = max(dMax, dBuff[i][j]);
 	}
-	cout<<"Max is:"<<max<<endl;
+	cout<<"Max is:"<<dMax<<endl;
 }
 
 void main()
 {
-	double buff[ROW][COLUMN];
-	input(buff);
-	calculate_set_average(buff);
-	calculate_total_average(buff);
-	find_max(buff);
+	double dBbuff[ROW][COLUMN];
+	Input(dBbuff);
+	CalculateSetAverage(dBbuff);
+	CalculateTotalAverage(dBbuff);
+	FindMax(dBbuff);
 }

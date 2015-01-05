@@ -1,28 +1,28 @@
 #include <iostream>
 using namespace std;
 
-bool to_upper(char &var)
+bool ToUpper(char *pcVar)
 {
-	if(var >= 97 && var <= 122)
+	if(*pcVar >= 97 && *pcVar <= 122)
 	{
-		var -= 32;
+		*pcVar -= 32;
 		return true;
 	}
-	else if(var >= 65 && var <= 90)
+	else if(*pcVar >= 65 && *pcVar <= 90)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool main()
+void main()
 {
-	char var;
+	char cVar;
 	cout<<"Input a character:";
-	cin>>var;
+	cin>>cVar;
 
-	if(to_upper(var))
-		cout<<"Capital:"<<var<<endl;
+	if(ToUpper(&cVar))
+		cout<<"Capital:"<<cVar<<endl;
 	else
-		cout<<"It's not a alphabet:"<<var<<endl;
+		cout<<"It's not a alphabet:"<<cVar<<endl;
 }
